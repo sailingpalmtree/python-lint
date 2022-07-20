@@ -1,77 +1,35 @@
-# action-template
+# Description
 
-<!-- TODO: replace reviewdog/action-template with your repo name -->
-[![Test](https://github.com/reviewdog/action-template/workflows/Test/badge.svg)](https://github.com/reviewdog/action-template/actions?query=workflow%3ATest)
-[![reviewdog](https://github.com/reviewdog/action-template/workflows/reviewdog/badge.svg)](https://github.com/reviewdog/action-template/actions?query=workflow%3Areviewdog)
-[![depup](https://github.com/reviewdog/action-template/workflows/depup/badge.svg)](https://github.com/reviewdog/action-template/actions?query=workflow%3Adepup)
-[![release](https://github.com/reviewdog/action-template/workflows/release/badge.svg)](https://github.com/reviewdog/action-template/actions?query=workflow%3Arelease)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/reviewdog/action-template?logo=github&sort=semver)](https://github.com/reviewdog/action-template/releases)
-[![action-bumpr supported](https://img.shields.io/badge/bumpr-supported-ff69b4?logo=github&link=https://github.com/haya14busa/action-bumpr)](https://github.com/haya14busa/action-bumpr)
+This repo contains a GitHub action to run code linters and report their findings on GitHub.
 
-![github-pr-review demo](https://user-images.githubusercontent.com/3797062/73162963-4b8e2b00-4132-11ea-9a3f-f9c6f624c79f.png)
-![github-pr-check demo](https://user-images.githubusercontent.com/3797062/73163032-70829e00-4132-11ea-8481-f213a37db354.png)
+The currently supported code linters are:
+- [flakeheaven](https://github.com/flakeheaven/flakeheaven),
+using [reviewdog](https://github.com/reviewdog/reviewdog) to annotate code changes on GitHub.
 
-This is a template repository for [reviewdog](https://github.com/reviewdog/reviewdog) action with release automation.
-Click `Use this template` button to create your reviewdog action :dog:!
+This action was created from `reviewdog`'s awesome [action template](https://github.com/reviewdog/action-template).
 
-If you want to create your own reviewdog action from scratch without using this
-template, please check and copy release automation flow.
-It's important to manage release workflow and sync reviewdog version for all
-reviewdog actions.
+## Current status
 
-This repo contains a sample action to run [misspell](https://github.com/client9/misspell).
+For `push` events to the `master` branch:
 
-## Input
-
-<!-- TODO: update -->
-```yaml
-inputs:
-  github_token:
-    description: 'GITHUB_TOKEN'
-    default: '${{ github.token }}'
-  workdir:
-    description: 'Working directory relative to the root directory.'
-    default: '.'
-  ### Flags for reviewdog ###
-  level:
-    description: 'Report level for reviewdog [info,warning,error]'
-    default: 'error'
-  reporter:
-    description: 'Reporter of reviewdog command [github-pr-check,github-check,github-pr-review].'
-    default: 'github-pr-check'
-  filter_mode:
-    description: |
-      Filtering mode for the reviewdog command [added,diff_context,file,nofilter].
-      Default is added.
-    default: 'added'
-  fail_on_error:
-    description: |
-      Exit code for reviewdog when errors are found [true,false]
-      Default is `false`.
-    default: 'false'
-  reviewdog_flags:
-    description: 'Additional reviewdog flags'
-    default: ''
-  ### Flags for <linter-name> ###
-  locale:
-    description: '-locale flag of misspell. (US/UK)'
-    default: ''
-```
+[![Test flakeheaven with Reviewdog](https://github.com/sailingpalmtree/lint/actions/workflows/test.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/test.yml)
+[![Docker Image CI](https://github.com/sailingpalmtree/lint/actions/workflows/dockerimage.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/dockerimage.yml)
+[![Test Flakehell with Reviewdog](https://github.com/sailingpalmtree/lint/actions/workflows/test.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/test.yml)
+[![reviewdog](https://github.com/sailingpalmtree/lint/actions/workflows/reviewdog.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/reviewdog.yml)
+[![release](https://github.com/sailingpalmtree/lint/actions/workflows/release.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/release.yml)
 
 ## Usage
-<!-- TODO: update. replace `template` with the linter name -->
 
 ```yaml
-name: reviewdog
+name: linting
 on: [pull_request]
 jobs:
-  # TODO: change `linter_name`.
-  linter_name:
-    name: runner / <linter-name>
+  flakehell:
+    name: lint-runner
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: reviewdog/action-template@v1
+      - uses: sailingpalmtree/lint@latest
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
@@ -81,34 +39,69 @@ jobs:
           level: warning
 ```
 
-## Development
+## Testing
 
-### Release
+There are three ways to test this action:
 
-#### [haya14busa/action-bumpr](https://github.com/haya14busa/action-bumpr)
-You can bump version on merging Pull Requests with specific labels (bump:major,bump:minor,bump:patch).
-Pushing tag manually by yourself also work.
+1. The included test workflows will run some sanity tests.
+2. You can test the full flow of the Action with `act`.
+3. You can also test the steps the Action will invoke with a locally built `docker` container.
 
-#### [haya14busa/action-update-semver](https://github.com/haya14busa/action-update-semver)
+### Use the included test workflows
 
-This action updates major/minor release tags on a tag push. e.g. Update v1 and v1.2 tag when released v1.2.3.
-ref: https://help.github.com/en/articles/about-actions#versioning-your-action
+These are defined in [`test.yaml`](https://github.com/sailingpalmtree/lint/blob/master/.github/workflows/test.yml). One can further configure these, but you can see in mine how I set them up.
 
-### Lint - reviewdog integration
+### Test the action locally
 
-This reviewdog action template itself is integrated with reviewdog to run lints
-which is useful for Docker container based actions.
+For this I used the tool [act](https://github.com/nektos/act).
 
-![reviewdog integration](https://user-images.githubusercontent.com/3797062/72735107-7fbb9600-3bde-11ea-8087-12af76e7ee6f.png)
+#### Platforms
 
-Supported linters:
+I saved the platforms I cared about in my `~/.actrc` file:
 
-- [reviewdog/action-shellcheck](https://github.com/reviewdog/action-shellcheck)
-- [reviewdog/action-hadolint](https://github.com/reviewdog/action-hadolint)
-- [reviewdog/action-misspell](https://github.com/reviewdog/action-misspell)
+```text
+-P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest
+-P ubuntu-20.04=ghcr.io/catthehacker/ubuntu:act-20.04
+-P ubuntu-18.04=ghcr.io/catthehacker/ubuntu:act-18.04
+```
 
-### Dependencies Update Automation
-This repository uses [reviewdog/action-depup](https://github.com/reviewdog/action-depup) to update
-reviewdog version.
+(note that you could pass these in on the command line too with `-P`)
 
-[![reviewdog depup demo](https://user-images.githubusercontent.com/3797062/73154254-170e7500-411a-11ea-8211-912e9de7c936.png)](https://github.com/reviewdog/action-template/pull/6)
+#### Secrets and environment variables
+
+In order to pass in secrets and other env variables to the action, I saved these in `.env` and `.secret` files.
+(Don't forget to add these to `.gitignore` for obvious reasons)
+`act` by default will read these files with these names but you can name them differently and pass them in with their flags.
+Alternatively, you can pass them in on the `act` command line too.
+
+#### Invocation
+
+I ran `act` with the simple `act push` command. Here, `push` was meant to simulate a GitHub `push` event. You can use any other event, and you can further configure them if you wish.
+
+### With a locally built Docker image
+
+There's an included `Dockerfile.testing` that can be used to build a container identical to the one the Action uses when it's running. The only difference is that `Dockerfile.testing` doesn't invoke the `entrypoint.sh` script - instead it drops you into `bash` upon running the container. This is so that you can then manually inspect the contents of the container and run any commands you like, including the ones the `entrypoint.sh` script has. Naturally, you'll have to set the needed environment variables yourself in this case.
+
+Example commands for the above:
+```bash
+docker build . -t linter -f Dockerfile.testing 
+docker run -it linter
+# Inside the container
+mkdir /tmp/devel
+cd /tmp/devel
+
+git clone <your desired repository>
+python3.8 -m flakeheaven lint
+```
+
+Feel free to modify the `Dockerfile` or the `Dockerfile.testing`, but always make sure they only differ in their entrypoint. In other words, running `diff Dockerfile*` should show only the following:
+
+```bash
+diff Dockerfile*
+# [some line numbers here]
+< COPY entrypoint.sh /entrypoint.sh
+<
+< ENTRYPOINT ["/entrypoint.sh"]
+---
+> ENTRYPOINT [ "/bin/bash" ]
+```
