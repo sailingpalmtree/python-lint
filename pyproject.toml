@@ -1,0 +1,3 @@
+[tool.flakeheaven]
+# show line of source code in output
+show_source = true
