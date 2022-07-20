@@ -1,2 +1,7 @@
 # Folders to ignore
 .vscode/
+
+# Local environment specific settings
+.env
+.secret
+.secrets
