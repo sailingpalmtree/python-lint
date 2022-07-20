@@ -1,6 +1,9 @@
 # Description
 
-This repo contains a GitHub action to run [flakehell](https://github.com/flakehell/flakehell),
+This repo contains a GitHub action to run code linters and report thheir findings on GitHub.
+
+The currently supported code linters are:
+- [flakeheaven](https://github.com/flakeheaven/flakeheaven),
 using [reviewdog](https://github.com/reviewdog/reviewdog) to annotate code changes on GitHub.
 
 This action was created from `reviewdog`'s awesome [action template](https://github.com/reviewdog/action-template).
@@ -9,11 +12,11 @@ This action was created from `reviewdog`'s awesome [action template](https://git
 
 For `push` events to the `master` branch:
 
-[![Test Flakehell with Reviewdog](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/test.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/test.yml)
-[![Docker Image CI](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/dockerimage.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/dockerimage.yml)
-[![Test Flakehell with Reviewdog](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/test.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/test.yml)
-[![reviewdog](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/reviewdog.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/reviewdog.yml)
-[![release](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/release.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/reviewdog-flakehell-action/actions/workflows/release.yml)
+[![Test flakeheaven with Reviewdog](https://github.com/sailingpalmtree/lint/actions/workflows/test.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/test.yml)
+[![Docker Image CI](https://github.com/sailingpalmtree/lint/actions/workflows/dockerimage.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/dockerimage.yml)
+[![Test Flakehell with Reviewdog](https://github.com/sailingpalmtree/lint/actions/workflows/test.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/test.yml)
+[![reviewdog](https://github.com/sailingpalmtree/lint/actions/workflows/reviewdog.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/reviewdog.yml)
+[![release](https://github.com/sailingpalmtree/lint/actions/workflows/release.yml/badge.svg?branch=master&event=push)](https://github.com/sailingpalmtree/lint/actions/workflows/release.yml)
 
 ## Usage
 
@@ -26,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: sailingpalmtree/reviewdog-flakehell-action@0.2
+      - uses: sailingpalmtree/lint@0.2
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
@@ -51,7 +54,7 @@ There are three ways to test this action:
 
 ### Use the included test workflows
 
-These are defined in [`test.yaml`](https://github.com/sailingpalmtree/reviewdog-flakehell-action/blob/master/.github/workflows/test.yml). One can further configure these, but you can see in mine how I set them up.
+These are defined in [`test.yaml`](https://github.com/sailingpalmtree/lint/blob/master/.github/workflows/test.yml). One can further configure these, but you can see in mine how I set them up.
 
 ### Test the action locally
 
