@@ -1,6 +1,6 @@
 # Description
 
-This repo contains a GitHub action to run code linters and report thheir findings on GitHub.
+This repo contains a GitHub action to run code linters and report their findings on GitHub.
 
 The currently supported code linters are:
 - [flakeheaven](https://github.com/flakeheaven/flakeheaven),
@@ -21,15 +21,15 @@ For `push` events to the `master` branch:
 ## Usage
 
 ```yaml
-name: reviewdog-flakehell
+name: linting
 on: [pull_request]
 jobs:
   flakehell:
-    name: runner / flakehell
+    name: lint-runner
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: sailingpalmtree/lint@0.2
+      - uses: sailingpalmtree/lint@latest
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
@@ -38,11 +38,6 @@ jobs:
           # GitHub Status Check won't become failure with warning.
           level: warning
 ```
-
-## Releases
-
-- v0.2 - first fully tested, and actually fully used version
-- v0.1 - first draft release
 
 ## Testing
 
@@ -86,6 +81,18 @@ I ran `act` with the simple `act push` command. Here, `push` was meant to simula
 ### With a locally built Docker image
 
 There's an included `Dockerfile.testing` that can be used to build a container identical to the one the Action uses when it's running. The only difference is that `Dockerfile.testing` doesn't invoke the `entrypoint.sh` script - instead it drops you into `bash` upon running the container. This is so that you can then manually inspect the contents of the container and run any commands you like, including the ones the `entrypoint.sh` script has. Naturally, you'll have to set the needed environment variables yourself in this case.
+
+Example commands for the above:
+```bash
+docker build . -t linter -f Dockerfile.testing 
+docker run -it linter
+# Inside the container
+mkdir /tmp/devel
+cd /tmp/devel
+
+git clone <your desired repository>
+python3.8 -m flakeheaven lint
+```
 
 Feel free to modify the `Dockerfile` or the `Dockerfile.testing`, but always make sure they only differ in their entrypoint. In other words, running `diff Dockerfile*` should show only the following:
 
