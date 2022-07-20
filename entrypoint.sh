@@ -42,14 +42,13 @@ echo 'reviewdog -efm="%f:%l:%c: %m" \
       -filter-mode="${INPUT_FILTER_MODE}" \
       -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
       -level="${INPUT_LEVEL}" \
-      "${INPUT_REVIEWDOG_FLAGS}" -tee < "${TMPFILE}"'
+      -tee < "${TMPFILE}"'
 echo
 echo "Where vars are:"
 echo "  INPUT_REPORTER=${INPUT_REPORTER}"
 echo "  INPUT_FILTER_MODE=${INPUT_FILTER_MODE}"
 echo "  INPUT_FAIL_ON_ERROR=${INPUT_FAIL_ON_ERROR}"
 echo "  INPUT_LEVEL=${INPUT_LEVEL}"
-echo "  INPUT_REVIEWDOG_FLAGS=${INPUT_REVIEWDOG_FLAGS}"
 
 echo -e "\n============================="
 reviewdog -efm="%f:%l:%c: %m" \
@@ -58,7 +57,6 @@ reviewdog -efm="%f:%l:%c: %m" \
       -filter-mode="${INPUT_FILTER_MODE}" \
       -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
       -level="${INPUT_LEVEL}" \
-      "${INPUT_REVIEWDOG_FLAGS}" \
       -tee <"${TMPFILE}"
 
 echo -e "\n============================="
