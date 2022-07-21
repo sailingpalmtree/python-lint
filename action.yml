@@ -5,7 +5,7 @@
 #
 # This Action was created using reviewdog's Action Template
 # https://github.com/reviewdog/action-template
-name: 'Run flakeheaven with reviewdog'
+name: 'Python linting with flakeheaven and reviewdog'
 description: '🐶 Run flakeheaven with reviewdog on pull requests to improve code review experience.'
 author: 'Balint Gyimesi'
 inputs:
