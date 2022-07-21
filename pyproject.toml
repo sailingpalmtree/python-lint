@@ -1,3 +1,17 @@
 [tool.flakeheaven]
 # show line of source code in output
 show_source = true
+# make output nice
+format = "grouped"
+# 80 chars aren't enough in 21 century
+max_line_length = 90
+
+[tool.flakeheaven.plugins]
+# enable everythind that starts with `flake8-`
+"flake8-*" = ["+*"]
+
+mccabe = ["+*"]
+pep8-naming = ["+*"]
+pycodestyle = ["+*"]
+pyflakes = ["+*"]
+pylint = ["+*"]
