@@ -31,20 +31,20 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install reviewdog, flake8, pylint and flakeheaven, then plugins for flakeheaven
 RUN ${PYTHON_VERSION} -m pip install --no-cache-dir \
-    flake8 \
-    flakeheaven \
-    pylint \
-    flake8-bugbear \
-    flake8-comprehensions \
-    flake8-return \
-    flake8-simplify>=0.19.0 \
-    flake8-spellcheck \
-    flake8-functions \
-    wemake-python-styleguide \
-    flake8-markdown \
-    flake8-docstrings \
-    flake8-codes \
-    flake8-import-order
+    flake8>=4.0.0 \
+    flakeheaven>=3.0.0 \
+    pylint>=2.15.0 \
+    flake8-bugbear>=22.7.1 \
+    flake8-comprehensions>=3.10.0 \
+    flake8-return>=1.1.3 \
+    flake8-simplify>=0.19.3 \
+    flake8-spellcheck>=0.28.0 \
+    flake8-functions>=0.0.7 \
+    wemake-python-styleguide>=0.16.1 \
+    flake8-markdown>=v0.3.0 \
+    flake8-docstrings>=1.6.0 \
+    flake8-codes>=0.2.2 \
+    flake8-import-order>=0.18.1
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh \
