@@ -37,7 +37,7 @@ RUN ${PYTHON_VERSION} -m pip install --no-cache-dir \
     flake8-bugbear \
     flake8-comprehensions \
     flake8-return \
-    flake8-simplify \
+    flake8-simplify>=0.19.0 \
     flake8-spellcheck \
     flake8-functions \
     wemake-python-styleguide \
