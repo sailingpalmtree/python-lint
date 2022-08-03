@@ -32,7 +32,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install flake8, pylint and flakeheaven, then plugins for flakeheaven
 RUN ${PYTHON_VERSION} -m pip install --no-cache-dir \
-    flake8>=4.0.0 \
+    flake8==4.0.1 \
     pylint>=2.15.0 \
     flakeheaven>=3.0.0 \
     flake8-bugbear>=22.7.1 \
