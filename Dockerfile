@@ -1,4 +1,6 @@
-FROM ubuntu:18.04
+# This will break everyone else so use this version in BG only.
+FROM artifactory.berkshiregrey.com/docker/ubuntu:18.04
+# FROM ubuntu:18.04
 
 # For https://github.com/reviewdog/reviewdog/issues/1158
 ENV REVIEWDOG_VERSION=v0.14.1
