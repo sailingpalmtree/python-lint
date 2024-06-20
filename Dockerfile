@@ -19,7 +19,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install specified Python version and pip3.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common
-RUN add-apt-repository ppa:deadsnakes/ppa -y
+RUN add-apt-repository 'ppa:deadsnakes/ppa' -y
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ${PYTHON_VERSION} \
     python3-pip
