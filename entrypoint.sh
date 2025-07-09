@@ -8,7 +8,6 @@ if [ -n "${GITHUB_WORKSPACE}" ]; then
 fi
 
 export PY_EXE="${INPUT_PYTHON_VERSION}"
-export INPUT_FILTER_MODE=diff_context
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 TMPFILE=$(mktemp)
 export TMPFILE
